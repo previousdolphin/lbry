@@ -33,19 +33,5 @@ python -c "import gmpy; print 'can import gmpy from %s' % gmpy.__file__"
 echo "installing lbrynet"
 pip install ..\.
 python -c "import lbrynet; print 'can import lbrynet from %s' % lbrynet.__file__"
+python -c "import win32api; print 'can import win32api from %s' % lbrynet.__file__"
 
-echo "building lbrynet-daemon.exe"
-pyinstaller -y daemon.onefile.spec
-echo "building lbrynet-cli.exe"
-pyinstaller -y cli.onefile.spec
-echo "building lbrynet-console.exe"
-pyinstaller -y console.onefile.spec
-
-echo "signing binaries"
-nuget install secure-file -ExcludeVersion
-secure-file\tools\secure-file -decrypt .\lbry2.pfx.enc -secret "$env:pfx_key"
-signtool.exe sign /f .\lbry2.pfx /p "$env:key_pass" /tr http://tsa.starfieldtech.com /td SHA256 /fd SHA256 dist\*.exe
-
-echo "uploading assets"
-python zip_daemon.py
-python upload_assets.py
