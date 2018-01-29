@@ -6,6 +6,8 @@ mingw32-make --version
 
 echo "installing pywin32"
 pip install pywin32
+python -c "import site, os, json; print json.dumps({p: '%s is not a directory' % p if not os.path.isdir(p) else os.listdir(p) for p in site.getsitepackages()}, indent=2)"
+python -c "import win32api; print 'can import win32api from %s' % win32api.__file__"
 
 # build/install miniupnpc manually
 echo "building miniupnpc"
@@ -33,5 +35,4 @@ python -c "import gmpy; print 'can import gmpy from %s' % gmpy.__file__"
 echo "installing lbrynet"
 pip install ..\.
 python -c "import lbrynet; print 'can import lbrynet from %s' % lbrynet.__file__"
-python -c "import win32api; print 'can import win32api from %s' % lbrynet.__file__"
 
