@@ -4,6 +4,9 @@ $env:Path += ";C:\Program Files (x86)\Windows Kits\10\bin\x86\"
 gcc --version
 mingw32-make --version
 
+echo "installing pypywin32"
+pip install pypiwin32
+
 # build/install miniupnpc manually
 echo "building miniupnpc"
 tar zxf miniupnpc-1.9.tar.gz
@@ -14,6 +17,7 @@ python setupmingw32.py build --compiler=mingw32
 python setupmingw32.py install
 cd ..\
 Remove-Item -Recurse -Force miniupnpc-1.9
+python -c "import miniupnpc; print 'can import miniupnpc from %s' % miniupnpc.__file__"
 
 # copy requirements from lbry, but remove gmpy and miniupnpc (installed manually)
 Get-Content ..\requirements.txt | Select-String -Pattern 'gmpy|miniupnpc' -NotMatch | Out-File requirements_base.txt
@@ -25,8 +29,10 @@ python set_build.py
 
 echo "installing lbrynet requirements"
 pip install -r requirements.txt
+python -c "import gmpy; print 'can import gmpy from %s' % gmpy.__file__"
 echo "installing lbrynet"
 pip install ..\.
+python -c "import lbrynet; print 'can import lbrynet from %s' % lbrynet.__file__"
 
 echo "building lbrynet-daemon.exe"
 pyinstaller -y daemon.onefile.spec
