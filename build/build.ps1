@@ -4,8 +4,8 @@ $env:Path += ";C:\Program Files (x86)\Windows Kits\10\bin\x86\"
 gcc --version
 mingw32-make --version
 
-echo "installing pypywin32"
-pip install pypiwin32
+echo "installing pywin32"
+pip install pywin32
 
 # build/install miniupnpc manually
 echo "building miniupnpc"
